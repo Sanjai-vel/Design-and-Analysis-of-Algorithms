@@ -1,0 +1,254 @@
+Divide and Conquer
+
+1.Given an array of 1s and 0s this has all 1s first followed by all 0s. Aim is to find the number of 0s. Write a program using Divide and Conquer to Count the number of zeroes in the given array.
+Input Format
+   First Line Contains Integer m – Size of array
+   Next m lines Contains m numbers – Elements of an array
+Output Format
+   First Line Contains Integer – Number of zeroes present in the given array.
+
+#include <stdio.h>
+int main(){
+    int n;
+    scanf("%d", &n);
+    int a[n];
+    for(int i=0;i<n;i++){
+        scanf("%d", &a[i]);
+    }
+    int min=0;
+    int max=n-1;
+    while(max>=min){
+        int mid= (max+min)/2;
+        if (a[mid]==1){
+            min = mid+1;
+        }
+        else{
+            max = mid-1;
+        }
+    }
+    int count = n-min;
+    printf("%d", count);
+}
+
+2.Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+ 
+
+Example 1:
+
+Input: nums = [3,2,3]
+Output: 3
+Example 2:
+
+Input: nums = [2,2,1,1,1,2,2]
+Output: 2
+ 
+
+Constraints:
+
+n == nums.length
+1 <= n <= 5 * 104
+-231 <= nums[i] <= 231 - 1
+
+For example:
+
+Input	Result
+3
+3 2 3
+3
+7
+2 2 1 1 1 2 2
+2
+Answer:(penalty regime: 0 %)
+
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int candidate = a[0];
+    int count = 0;
+
+    for (int i = 0; i < n; i++) {
+
+        if (count == 0)
+            candidate = a[i];
+
+        if (a[i] == candidate)
+            count++;
+        else
+            count--;
+    }
+
+    printf("%d", candidate);
+
+    return 0;
+}
+
+3. Given a sorted array and a value x, the floor of x is the largest element in array smaller than or equal to x. Write divide and conquer algorithm to find floor of x.
+Input Format
+   First Line Contains Integer n – Size of array
+   Next n lines Contains n numbers – Elements of an array
+   Last Line Contains Integer x – Value for x
+ 
+Output Format
+   First Line Contains Integer – Floor value for x
+
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    int x;
+    scanf("%d", &x);
+
+    int min = 0;
+    int max = n - 1;
+    int floor = -1;
+
+    while (min <= max) {
+
+        int mid = (min + max) / 2;
+
+        if (a[mid] <= x) {
+            floor = a[mid];
+            min = mid + 1;
+        }
+        else {
+            max = mid - 1;
+        }
+    }
+
+    printf("%d", floor);
+
+    return 0;
+}
+
+4.Given a sorted array of integers say arr[] and a number x. Write a recursive program using divide and conquer strategy to check if there exist two elements in the array whose sum = x. If there exist such two elements then return the numbers, otherwise print as “No”.
+Note: Write a Divide and Conquer Solution
+Input Format
+   First Line Contains Integer n – Size of array
+   Next n lines Contains n numbers – Elements of an array
+   Last Line Contains Integer x – Sum Value
+Output Format
+   First Line Contains Integer – Element1
+   Second Line Contains Integer – Element2 (Element 1 and Elements 2 together sums to value “x”)
+
+Answer:(penalty regime: 0 %)
+
+#include <stdio.h>
+
+int search(int a[], int low, int high, int x)
+{
+    if (low > high)
+        return -1;
+
+    int mid = (low + high) / 2;
+
+    if (a[mid] == x)
+        return mid;
+
+    if (a[mid] < x)
+        return search(a, mid + 1, high, x);
+
+    return search(a, low, mid - 1, x);
+}
+
+int main()
+{
+    int n, x;
+    scanf("%d", &n);
+
+    int a[n];
+
+    for (int i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    scanf("%d", &x);
+
+    for (int i = 0; i < n; i++)
+    {
+        int need = x - a[i];
+
+        int j = search(a, i + 1, n - 1, need);
+
+        if (j != -1)
+        {
+            printf("%d\n", a[i]);
+            printf("%d\n", a[j]);
+            return 0;
+        }
+    }
+
+    printf("No");
+
+    return 0;
+}
+
+5. Write a Program to Implement the Quick Sort Algorithm
+
+Input Format:
+The first line contains the no of elements in the list-n
+The next n lines contain the elements.
+
+Output:
+Sorted list of elements
+
+For example:
+
+Input	Result
+5
+67 34 12 98 78
+12 34 67 78 98
+
+
+#include <stdio.h>
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+
+    int a[n];
+
+    for (int i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        int pivot = a[i];
+        int j = i + 1;
+
+        for (int k = j; k < n; k++)
+        {
+            if (a[k] < pivot)
+            {
+                int temp = a[k];
+                a[k] = a[i];
+                a[i] = temp;
+                pivot = a[i];
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+        printf("%d ", a[i]);
+
+    return 0;
+}
